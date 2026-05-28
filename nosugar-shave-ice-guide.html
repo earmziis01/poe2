@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shave Ice HPT — ไกด์ Monk น้ำแข็ง by NoSugar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&family=Sarabun:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05080f;
+    --bg2:#0a1019;
+    --panel:#0e1726;
+    --panel2:#13203a;
+    --ice:#8fdcff;
+    --ice-bright:#c4eeff;
+    --ice-deep:#2f8ed4;
+    --ice-glow:rgba(143,220,255,.5);
+    --frost:#e6f7ff;
+    --gold:#f0cd86;
+    --violet:#9db4ff;
+    --text:#c2d2e8;
+    --muted:#74859e;
+    --line:rgba(143,220,255,.13);
+    --line2:rgba(143,220,255,.25);
+    --danger:#ff9a9a;
+    --green:#8fe6b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1400px 700px at 85% -15%, rgba(47,142,212,.16), transparent 55%),
+      radial-gradient(1000px 600px at -10% 110%, rgba(143,220,255,.08), transparent 55%),
+      radial-gradient(600px 600px at 50% 50%, rgba(20,32,58,.4), transparent 70%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Sarabun',sans-serif;line-height:1.72;font-weight:300;
+    -webkit-font-smoothing:antialiased;padding-bottom:90px;overflow-x:hidden;
+  }
+  ::selection{background:var(--ice-deep);color:#fff}
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 18px;position:relative;z-index:1}
+
+  /* fade-in */
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  section,.tldr,header.hero>*{animation:rise .7s cubic-bezier(.2,.7,.3,1) both}
+
+  /* HERO */
+  header.hero{text-align:center;padding:80px 18px 30px;position:relative}
+  header.hero::after{
+    content:"❅";position:absolute;font-size:340px;color:var(--ice);opacity:.025;
+    top:30px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:-1;
+  }
+  .kicker{font-family:'Cinzel',serif;letter-spacing:.5em;font-size:11px;color:var(--ice);
+    text-transform:uppercase;margin-bottom:20px;opacity:.9}
+  h1{
+    font-family:'Cinzel',serif;font-weight:900;line-height:.98;font-size:clamp(40px,9vw,82px);
+    background:linear-gradient(175deg,var(--frost) 0%,var(--ice) 50%,var(--ice-deep) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px var(--ice-glow);letter-spacing:.01em;
+  }
+  .h1sub{font-family:'Cinzel',serif;font-size:clamp(13px,2.4vw,18px);letter-spacing:.3em;
+    color:var(--ice-bright);margin-top:6px;opacity:.85;text-transform:uppercase}
+  .sub{color:var(--muted);font-size:16px;max-width:600px;margin:20px auto 0}
+  .by{color:var(--gold);font-family:'Cinzel',serif;font-size:13px;letter-spacing:.15em;margin-top:10px}
+  .badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .badge{border:1px solid var(--line2);background:rgba(143,220,255,.06);padding:7px 16px;
+    border-radius:40px;font-size:13px;color:var(--ice-bright);backdrop-filter:blur(6px)}
+
+  .snow{display:flex;align-items:center;gap:16px;justify-content:center;margin:40px 0;color:var(--ice-deep);font-size:14px}
+  .snow::before,.snow::after{content:"";height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--ice-deep))}
+  .snow::after{background:linear-gradient(90deg,var(--ice-deep),transparent)}
+
+  /* TLDR */
+  .tldr{
+    background:linear-gradient(155deg,rgba(47,142,212,.16),rgba(14,23,38,.85));
+    border:1px solid var(--line2);border-radius:20px;padding:26px 28px;margin:26px 0 8px;
+    box-shadow:0 30px 60px -36px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.05);
+    backdrop-filter:blur(8px);
+  }
+  .tldr h3{font-family:'Cinzel',serif;color:var(--frost);font-size:16px;letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .tldr h3::before{content:"⚡";color:var(--gold)}
+  .tldr p{font-size:15.5px;color:var(--text)}
+  .tldr .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .tldr .chip{background:rgba(143,220,255,.08);border:1px solid var(--line);border-radius:10px;
+    padding:8px 14px;font-size:14px;flex:1;min-width:150px}
+  .tldr .chip b{color:var(--ice-bright);display:block;font-size:12px;letter-spacing:.05em;
+    text-transform:uppercase;margin-bottom:2px;font-weight:600}
+
+  /* NOTICE */
+  .notice{border:1px solid rgba(240,205,134,.3);
+    background:linear-gradient(180deg,rgba(240,205,134,.08),rgba(240,205,134,.02));
+    border-radius:14px;padding:16px 20px;margin:14px 0;font-size:14px;color:#f3e0b6}
+  .notice b{color:var(--gold)}
+  .notice.red{border-color:rgba(255,154,154,.35);
+    background:linear-gradient(180deg,rgba(255,154,154,.08),rgba(255,154,154,.02));color:#ffcaca}
+  .notice.red b{color:var(--danger)}
+
+  /* SECTION */
+  section{margin:54px 0;scroll-margin-top:18px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:6px}
+  .sec-num{font-family:'Cinzel',serif;font-weight:800;font-size:13px;color:var(--ice-deep);
+    border:1px solid var(--line2);border-radius:9px;padding:5px 11px;flex:none;background:rgba(143,220,255,.05)}
+  h2{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(24px,4.4vw,34px);color:var(--frost);letter-spacing:.01em}
+  .sec-desc{color:var(--muted);font-size:15px;margin:6px 0 24px}
+
+  /* CARD */
+  .card{background:linear-gradient(165deg,var(--panel),var(--bg2));border:1px solid var(--line);
+    border-radius:18px;padding:24px 26px;margin:16px 0;
+    box-shadow:0 24px 50px -34px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.025)}
+  .card h3{font-family:'Cinzel',serif;color:var(--ice-bright);font-size:18px;font-weight:600;
+    margin-bottom:14px;display:flex;align-items:center;gap:11px}
+  .card h3 .dot{width:9px;height:9px;background:var(--ice);border-radius:50%;box-shadow:0 0 12px var(--ice);flex:none}
+  p{margin:9px 0;font-size:15px}
+  strong{color:var(--frost);font-weight:600}
+  .hl{color:var(--ice-bright);font-weight:500}
+  .gold{color:var(--gold)}.vio{color:var(--violet)}
+  ul{margin:11px 0 11px 2px;list-style:none}
+  li{position:relative;padding-left:24px;margin:8px 0;font-size:15px}
+  li::before{content:"❖";position:absolute;left:0;top:1px;color:var(--ice-deep);font-size:12px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}}
+  .miniCard{background:rgba(19,32,58,.55);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .miniCard h4{color:var(--ice-bright);font-family:'Cinzel',serif;font-size:13px;letter-spacing:.08em;
+    margin-bottom:10px;text-transform:uppercase}
+  .pro{border-top:2px solid var(--green)}.con{border-top:2px solid var(--danger)}
+  .pro li::before{content:"✦";color:var(--green)}.con li::before{content:"✕";color:var(--danger);font-size:11px}
+
+  /* timeline */
+  .lvl{display:flex;margin:13px 0;align-items:stretch}
+  .lvl .tag{flex:none;width:88px;text-align:center;font-family:'Cinzel',serif;font-weight:700;
+    color:#06101d;font-size:12.5px;background:linear-gradient(165deg,var(--ice),var(--ice-deep));
+    border-radius:12px 0 0 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:12px 5px;line-height:1.25}
+  .lvl .tag small{font-weight:400;opacity:.85;font-size:10px;margin-top:2px}
+  .lvl .body{flex:1;background:rgba(14,23,38,.7);border:1px solid var(--line);border-left:none;
+    border-radius:0 12px 12px 0;padding:13px 17px;font-size:14.5px}
+  .lvl .body b{color:var(--ice-bright)}
+
+  .pill{display:inline-block;background:rgba(143,220,255,.1);border:1px solid var(--line2);
+    color:var(--ice-bright);border-radius:7px;padding:1px 10px;font-size:13.5px;font-weight:500;
+    margin:2px 1px;white-space:nowrap}
+  .pill.s{background:rgba(240,205,134,.1);color:var(--gold);border-color:rgba(240,205,134,.28)}
+  .pill.key{background:rgba(157,180,255,.12);color:var(--violet);border-color:rgba(157,180,255,.3)}
+
+  .rot{counter-reset:step;margin:12px 0}
+  .rot .step{display:flex;gap:15px;align-items:flex-start;margin:10px 0;
+    background:rgba(19,32,58,.5);border-radius:12px;padding:13px 16px;border:1px solid var(--line)}
+  .rot .step::before{counter-increment:step;content:counter(step);flex:none;width:30px;height:30px;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(165deg,var(--ice),var(--ice-deep));color:#06101d;font-weight:700;
+    font-size:14px;font-family:'Cinzel',serif}
+  .rot .step span{font-size:14.5px;padding-top:3px}
+
+  .check label{display:flex;gap:13px;align-items:flex-start;padding:12px 15px;margin:8px 0;
+    background:rgba(19,32,58,.55);border:1px solid var(--line);border-radius:12px;cursor:pointer;transition:.18s;font-size:14.5px}
+  .check label:hover{background:rgba(143,220,255,.08);border-color:var(--ice-deep)}
+  .check input{appearance:none;width:21px;height:21px;flex:none;margin-top:1px;border:2px solid var(--ice-deep);
+    border-radius:7px;cursor:pointer;transition:.15s;position:relative}
+  .check input:checked{background:var(--ice);border-color:var(--ice)}
+  .check input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;color:#06101d;font-weight:900;font-size:13px}
+  .check input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--ice-deep)}
+
+  nav.toc{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);
+    background:rgba(5,8,15,.85);border-bottom:1px solid var(--line);padding:11px 0;margin-bottom:6px}
+  nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+  nav.toc a{color:var(--muted);text-decoration:none;font-size:13px;white-space:nowrap;
+    padding:6px 13px;border-radius:9px;transition:.15s;border:1px solid transparent}
+  nav.toc a:hover{color:var(--ice-bright);background:rgba(143,220,255,.08);border-color:var(--line)}
+
+  .tip{background:rgba(143,220,255,.06);border:1px dashed var(--ice-deep);border-radius:12px;
+    padding:13px 17px;margin:14px 0;font-size:14px;color:var(--ice-bright)}
+  .tip b{color:var(--frost)}
+  .tip.warn{border-color:var(--danger);background:rgba(255,154,154,.06);color:#ffd0d0}
+  .tip.warn b{color:var(--danger)}
+  .tip.key{border-color:var(--violet);background:rgba(157,180,255,.07);color:var(--violet)}
+  .tip.key b{color:#cdd8ff}
+
+  code{background:rgba(143,220,255,.1);padding:1px 7px;border-radius:5px;color:var(--gold);font-size:13.5px}
+
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:70px;padding-top:26px;border-top:1px solid var(--line)}
+  footer b{color:var(--ice-bright)}
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#tldr">สรุปเร็ว</a>
+    <a href="#overview">ภาพรวม</a>
+    <a href="#hpt">หัวใจ HPT</a>
+    <a href="#route">เส้นทางเลเวล</a>
+    <a href="#gems">สกิล+เจม</a>
+    <a href="#combo">ลำดับกดสกิล</a>
+    <a href="#tree">พาสซีฟ</a>
+    <a href="#gear">ของใส่</a>
+    <a href="#checklist">เช็คลิสต์</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="kicker">Path of Exile 2 · 0.5 Return of the Ancients</div>
+  <h1>SHAVE&nbsp;ICE</h1>
+  <div class="h1sub">Hollow Palm · Ice Strike · Martial Artist</div>
+  <p class="sub">มังก์น้ำแข็งไส สาย "หมัดเปล่า" (Hollow Palm) — ตีระยะประชิดด้วย Ice Strike แช่แข็งทั้งจอ ไม่ต้องพึ่งอาวุธ เล่นง่าย ทนตาย</p>
+  <div class="by">★ อิงบิลด์ของ NoSugar — "Shave Ice HPT Martial Artist EiEi" ★</div>
+  <div class="badges">
+    <span class="badge">❄ Cold / Freeze</span>
+    <span class="badge">👊 Hollow Palm (ไม่ใช้อาวุธ)</span>
+    <span class="badge">🥢 Ice Strike</span>
+    <span class="badge">🎯 League Starter</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- TLDR -->
+  <div class="tldr" id="tldr">
+    <h3>สรุป 30 วินาที</h3>
+    <p><strong>ช่วงต้น</strong> (Act 1) เล่นเป็นน้ำแข็งร่าย: <span class="pill">Glacial Cascade</span> + <span class="pill">Frozen Locus</span> + <span class="pill">Frost Bomb</span> → <strong>กลางเกม</strong> สลับมาตีประชิดด้วย <span class="pill">Ice Strike</span> + ตีบอสด้วย <span class="pill">Tempest Bell</span> → <strong>Lv 22</strong> จิ้มคีย์สโตน <span class="pill key">Hollow Palm Technique</span> เลิกพึ่งอาวุธ ดาเมจมาจากเกราะ <span class="hl">ES/EV</span> แทน</p>
+    <div class="row">
+      <div class="chip"><b>สกิลหลักปลายเกม</b>Ice Strike (กวาด) + Tempest Bell (บอส)</div>
+      <div class="chip"><b>เด่นสุด</b>Freeze ล็อกศัตรู + ทนตาย</div>
+      <div class="chip"><b>ของที่หา</b>เกราะ Energy Shield + Evasion สูง</div>
+    </div>
+  </div>
+
+  <div class="notice red">
+    <b>⚠ อ่านก่อนเริ่ม (สำคัญ):</b> หน้าไกด์ของ NoSugar บน Mobalytics โดนระบบกันบ็อตบล็อก ผมจึง <b>ดึงเนื้อหาหน้านั้นโดยตรงไม่ได้</b> — ไกด์นี้สร้างจากโครงบิลด์ <b>Ice Strike + Hollow Palm Technique สาย Martial Artist (แพตช์ 0.5)</b> ซึ่งตรงกับชื่อบิลด์ของ NoSugar ("Shave Ice HPT") โครงการเล่น/เลเวล/กลไกแม่นยำ แต่ <b>ผังพาสซีฟแบบจิ้มทีละจุด</b> และ <b>ลำดับ support gem เป๊ะ ๆ</b> ขอให้เปิดหน้า NoSugar หรือดูในคลิปประกอบ (จุดที่ต้องเช็คผมทำเครื่องหมาย <span class="vio">◆</span> ไว้)
+  </div>
+
+  <!-- 1 OVERVIEW -->
+  <section id="overview">
+    <div class="sec-head"><span class="sec-num">01</span><h2>บิลด์นี้คืออะไร</h2></div>
+    <p class="sec-desc">เข้าใจตัวละครก่อนลงมือ</p>
+
+    <div class="card">
+      <h3><span class="dot"></span>แนวคิดหลัก</h3>
+      <p>เป็น <strong>Monk</strong> สาย Ascendancy <span class="hl">Martial Artist</span> เน้นดาเมจ <strong>น้ำแข็ง (Cold)</strong> ตีระยะประชิดด้วย <span class="pill">Ice Strike</span> ที่แช่แข็งศัตรูจนหยุดนิ่งแล้วแตกกระจาย</p>
+      <p>หัวใจของบิลด์คือคีย์สโตน <span class="pill key">Hollow Palm Technique (HPT)</span> — ทำให้เรา <strong>ไม่ต้องถืออาวุธ</strong> ดาเมจและความแรงมาจากค่าเกราะ <span class="hl">Energy Shield + Evasion</span> แทน (อธิบายเต็มในหัวข้อ 2) ข้อดีคือไม่ต้องเสียเงินไล่หาอาวุธแพง ๆ เหมาะกับการเริ่มลีกสุด ๆ</p>
+      <p>เสริมด้วย <span class="pill">Herald of Ice</span> ที่ทำให้ศัตรูที่ตายแล้วระเบิดน้ำแข็งลามทั้งจอ = เคลียร์ฝูงสุดมัน และ <span class="pill">Tempest Bell</span> (แพตช์ 0.5 วางได้ 3 ใบ) สำหรับถล่มบอส</p>
+    </div>
+
+    <div class="grid2">
+      <div class="miniCard pro">
+        <h4>ข้อดี</h4>
+        <ul>
+          <li>เล่นง่าย ทนตายมาก เหมาะมือใหม่</li>
+          <li>Freeze ล็อกศัตรูนิ่ง = ปลอดภัย</li>
+          <li>ไม่ต้องพึ่งอาวุธ = งบเริ่มต้นถูก</li>
+          <li>Herald of Ice ระเบิดลูกโซ่ เคลียร์ฝูงไว</li>
+          <li>Tempest Bell 0.5 บัฟแล้ว ถล่มบอสโหด</li>
+        </ul>
+      </div>
+      <div class="miniCard con">
+        <h4>ข้อควรระวัง</h4>
+        <ul>
+          <li>ช่วง <strong>ก่อน Lv 22</strong> ยังอ่อน ต้องอดทน</li>
+          <li>ต้องหาเกราะ <strong>ES/EV สูง</strong> ถึงจะแรง</li>
+          <li>บอสที่ <strong>กันแช่แข็ง</strong> จะตียากกว่า</li>
+          <li>เป็นสายประชิด ต้องเข้าใกล้ศัตรู</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="snow">❄ ❅ ❄</div>
+
+  <!-- 2 HPT -->
+  <section id="hpt">
+    <div class="sec-head"><span class="sec-num">02</span><h2>หัวใจของบิลด์ — Hollow Palm Technique</h2></div>
+    <p class="sec-desc">เข้าใจกลไกนี้ให้ขึ้นใจ เพราะมันคือเหตุผลที่บิลด์นี้แรง</p>
+
+    <div class="card">
+      <h3><span class="dot"></span>HPT ทำงานยังไง</h3>
+      <p>เมื่อจิ้มคีย์สโตน <span class="pill key">Hollow Palm Technique</span> แล้ว <strong>"มือเปล่า" (ไม่ถืออาวุธ) จะแรงกว่าถืออาวุธ</strong> โดยพลังมาจากเกราะ 2 ค่านี้:</p>
+      <div class="lvl"><div class="tag" style="width:130px;font-size:13px">Energy<br>Shield</div>
+        <div class="body">ยิ่งมีเยอะ → ยิ่งได้ <b>โอกาสคริติคอล (Crit Chance)</b> มาก</div></div>
+      <div class="lvl"><div class="tag" style="width:130px;font-size:13px">Evasion</div>
+        <div class="body">ยิ่งมีเยอะ → ยิ่งได้ <b>ความเร็วโจมตี (Attack Speed)</b> มาก</div></div>
+      <p style="margin-top:14px">แปลว่า "เกราะ" กลายเป็นทั้ง <strong>เกราะป้องกัน + แหล่งดาเมจ</strong> ในตัวเดียว ยิ่งของดี ตัวยิ่งทั้งอึดและแรงพร้อมกัน</p>
+    </div>
+
+    <div class="tip key"><b>◆ จังหวะเปลี่ยนเป็น HPT:</b> แนะนำราว ๆ <b>Lv 22</b> — ไม่รีบจิ้มเร็ว (จิ้มได้ตั้งแต่ Lv 13) เพราะช่วงแรกถ้าเกราะ ES/EV ยังไม่ดี อาวุธดี ๆ จะแรงกว่า รอเก็บผัง+ของ+เลเวลสกิลให้พร้อมก่อน แล้วเปลี่ยนทีเดียวจะลื่นกว่ามาก</div>
+    <div class="tip"><b>ของช่วงต้น vs ปลาย:</b> ช่วงแรกหลังเปลี่ยน HPT ให้เน้น <b>Energy Shield</b> ก่อน (สเกลดีกว่า) → พอกลาง-ปลายเกมค่อยทำเป็น <b>ไฮบริด EV/ES</b> เพราะผังพาสซีฟจะมีโหนดคริติคอลเยอะขึ้น</div>
+  </section>
+
+  <div class="snow">❄ ❅ ❄</div>
+
+  <!-- 3 ROUTE -->
+  <section id="route">
+    <div class="sec-head"><span class="sec-num">03</span><h2>เส้นทางเลเวล (ทำตามทีละช่วง)</h2></div>
+    <p class="sec-desc">ไล่ตั้งแต่เกิดจนถึงเปลี่ยนร่าง — ทำตามลำดับ ไม่ต้องคิดเยอะ</p>
+
+    <div class="lvl"><div class="tag">เริ่ม<small>Act 1</small></div>
+      <div class="body"><b>เล่นเป็นน้ำแข็งร่ายก่อน:</b> รับ <span class="pill">Glacial Cascade</span> จาก <b>Renly</b> ที่ Clearfell · เจมสองรับ <span class="pill">Frozen Locus</span> · เจมสามตัด <span class="pill">Frost Bomb</span> — ช่วงนี้ Ice Strike ยังอ่อนเพราะอาวุธไม่ดี เลยใช้สกิลร่ายไปก่อน</div></div>
+
+    <div class="lvl"><div class="tag">Lv 6</div>
+      <div class="body">ตัวเลือกอ่อน — อัปเกรด <span class="pill">Glacial Cascade</span> หรือเอา <span class="pill">Pounce</span> ไว้เคลื่อนที่</div></div>
+
+    <div class="lvl"><div class="tag">~Lv 14</div>
+      <div class="body"><b>เริ่มเปลี่ยนเป็นตีประชิด:</b> เอา <span class="pill">Ice Strike</span> มาเป็นสกิลหลัก + ตัด <span class="pill">Tempest Bell</span> ไว้ถล่มบอส (ต้องมี <b>อาวุธ Quarterstaff ดี ๆ</b> ช่วงนี้ ดูหัวข้อ 7)</div></div>
+
+    <div class="lvl"><div class="tag">Lv 16<small>& Lv 20</small></div>
+      <div class="body"><b class="gold">⭐ จุดช้อปสำคัญ!</b> เลเวล 16 และ 20 ปลดล็อกไอเทมเทียร์ใหม่ — <b>เก็บ Gold ไว้ช้อปรัว ๆ</b> ที่ร้านใน Ardura Caravan</div></div>
+
+    <div class="lvl"><div class="tag">Lv 22</div>
+      <div class="body"><b class="gold">⭐ เปลี่ยนร่าง!</b> จิ้ม <span class="pill key">Hollow Palm Technique</span> — ถอดอาวุธ ดาเมจมาจาก ES/EV บนเกราะแทน · เริ่มสวมเกราะ ES/EV สูง · เปิด <span class="pill">Herald of Ice</span> ไว้ระเบิดน้ำแข็ง</div></div>
+
+    <div class="lvl"><div class="tag">Lv 22+<small>endgame</small></div>
+      <div class="body"><b>ฟอร์มเต็ม:</b> <span class="pill">Ice Strike</span> กวาดฝูง + <span class="pill">Herald of Ice</span> ระเบิดลูกโซ่ + <span class="pill">Tempest Bell</span> (3 ใบ) + <span class="pill">Frost Bomb</span> ถล่มบอส</div></div>
+
+    <div class="tip warn"><b>อย่ารีบจิ้ม Hollow Palm ก่อน Lv 22!</b> ถ้าเกราะ ES/EV ยังไม่ดี การถืออาวุธ Quarterstaff ดี ๆ จะแรงกว่า — รอให้พร้อมก่อนค่อยเปลี่ยน</div>
+  </section>
+
+  <div class="snow">❄ ❅ ❄</div>
+
+  <!-- 4 GEMS -->
+  <section id="gems">
+    <div class="sec-head"><span class="sec-num">04</span><h2>สกิล + เจม</h2></div>
+    <p class="sec-desc">ชื่อสกิลทุกตัวเทียบ poe2db แล้วถูกต้อง ✓ — <span class="vio">◆ = ควรเช็คในหน้า NoSugar ให้ตรงเป๊ะ</span></p>
+
+    <div class="card">
+      <h3><span class="dot"></span>สกิลแต่ละตัวทำอะไร</h3>
+      <ul>
+        <li><span class="pill">Ice Strike</span> — สกิลตีหลักปลายเกม ตีประชิด สร้างคอมโบ มีพุ่งเข้าหา + แช่แข็ง</li>
+        <li><span class="pill">Glacial Cascade</span> — สกิลร่ายช่วงต้น (ก่อนเปลี่ยนเป็น Ice Strike) เล็งหนามปลายให้โดน</li>
+        <li><span class="pill">Frozen Locus</span> — วางคริสตัลน้ำแข็ง ถูกทำลายแล้วระเบิด + แช่แข็งรอบข้าง</li>
+        <li><span class="pill">Frost Bomb</span> — วางบนบอส ลดต้านทานน้ำแข็ง (Exposure) = ดาเมจเราขึ้น</li>
+        <li><span class="pill">Tempest Bell</span> — ระฆังถล่มบอส (0.5 วางได้ 3 ใบ!) ตีระฆังพร้อมบอส = ดาเมจเด้งมหาศาล</li>
+        <li><span class="pill">Herald of Ice</span> — เจม Spirit เปิดทิ้งไว้ ศัตรูที่ตายจะระเบิดน้ำแข็งลามต่อ</li>
+        <li><span class="pill">Pounce</span> <em>(ทางเลือก)</em> — ไว้เคลื่อนที่/หนี</li>
+        <li><span class="pill key">Hollow Palm Technique</span> — คีย์สโตน (ในผังพาสซีฟ ไม่ใช่เจม) หัวใจของบิลด์</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="dot"></span>การใส่ Support Gem <span class="vio" style="font-size:13px">◆</span></h3>
+      <p style="font-size:14px;color:var(--muted)">แนวทางมาตรฐานของบิลด์ Ice Strike + HPT (ลำดับเป๊ะ ๆ ให้ยึดตามหน้า NoSugar):</p>
+      <div class="lvl"><div class="tag" style="width:120px;font-size:12px">Ice Strike<br><small>ตีหลัก</small></div>
+        <div class="body">เน้นกลุ่ม <span class="pill s">เพิ่มความเร็วโจมตี</span> <span class="pill s">เพิ่มดาเมจน้ำแข็ง/ธาตุ</span> และ support เพิ่ม AOE/ลามเป้า เช่น <span class="pill s">Magnified Area</span> / <span class="pill s">Ancestral Call</span> ตอนเก็บแมพ</div></div>
+      <div class="lvl"><div class="tag" style="width:120px;font-size:12px">Tempest Bell<br><small>ตีบอส</small></div>
+        <div class="body"><span class="pill s">Overabundance</span> (ช่วยให้วางระฆังได้หลายใบ)</div></div>
+      <div class="lvl"><div class="tag" style="width:120px;font-size:12px">Frost Bomb<br><small>debuff</small></div>
+        <div class="body"><span class="pill s">Potent Exposure</span> (เพิ่มการลดต้านทาน) — ใส่หรือไม่ก็ได้</div></div>
+      <div class="lvl"><div class="tag" style="width:120px;font-size:12px">Herald of Ice<br><small>เคลียร์ฝูง</small></div>
+        <div class="body">support เพิ่มดาเมจ/พื้นที่ระเบิด ช่วยให้ลูกโซ่ลามไกลขึ้น</div></div>
+
+      <div class="tip key"><b>◆ ทำไมต้องเช็คหน้า NoSugar:</b> support gem เป๊ะ ๆ ที่ NoSugar เลือก (ตัวไหน เลเวลไหน เรียงยังไง) ผมยืนยันไม่ได้เพราะหน้าโดนบล็อก — แต่ "หลักการ" ด้านบนถูกต้องสำหรับสาย Ice Strike + HPT เปิดหน้าเขาดูช่อง Skill Gems แล้วจิ้มตามจะชัวร์ที่สุด</div>
+    </div>
+  </section>
+
+  <div class="snow">❄ ❅ ❄</div>
+
+  <!-- 5 COMBO -->
+  <section id="combo">
+    <div class="sec-head"><span class="sec-num">05</span><h2>ลำดับการกดสกิล</h2></div>
+    <p class="sec-desc">จำคอมโบนี้ให้ขึ้นใจ — แยกตีฝูง / ตีบอส และช่วงเลเวล</p>
+
+    <div class="grid2">
+      <div class="card" style="margin:8px 0">
+        <h3><span class="dot"></span>ช่วงต้น (Act 1) · ตีฝูง</h3>
+        <div class="rot">
+          <div class="step"><span>สแปม <span class="pill">Glacial Cascade</span> เล็งหนามปลายให้โดน</span></div>
+          <div class="step"><span>วาง <span class="pill">Frozen Locus</span> แล้วยิงให้ระเบิด = เบิร์สต์ใหญ่</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin:8px 0">
+        <h3><span class="dot"></span>ช่วงต้น (Act 1) · ตีบอส</h3>
+        <div class="rot">
+          <div class="step"><span>วาง <span class="pill">Frost Bomb</span> ลดต้านทาน</span></div>
+          <div class="step"><span>วาง <span class="pill">Frozen Locus</span> บนบอส</span></div>
+          <div class="step"><span>สแปม <span class="pill">Glacial Cascade</span> ยืนให้หนามโดน</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card" style="margin:8px 0">
+        <h3><span class="dot"></span>Lv 14+ / ปลายเกม · ตีฝูง</h3>
+        <div class="rot">
+          <div class="step"><span>พุ่งเข้าฝูงด้วย <span class="pill">Ice Strike</span> ตีรัว</span></div>
+          <div class="step"><span><span class="pill">Herald of Ice</span> (เปิดไว้) จะระเบิดลูกโซ่เองเมื่อศัตรูแช่แข็งตาย</span></div>
+          <div class="step"><span>ฝูงใหญ่: วาง <span class="pill">Frozen Locus</span> เสริมให้ระเบิด</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin:8px 0">
+        <h3><span class="dot"></span>Lv 14+ / ปลายเกม · ตีบอส</h3>
+        <div class="rot">
+          <div class="step"><span>วาง <span class="pill">Frost Bomb</span> บนบอส (ลดต้านทาน)</span></div>
+          <div class="step"><span>ตี <span class="pill">Ice Strike</span> สะสมคอมโบ (4 ครั้ง)</span></div>
+          <div class="step"><span>วาง <span class="pill">Tempest Bell</span> (วางได้ถึง 3 ใบ)</span></div>
+          <div class="step"><span>ตี Ice Strike ใส่ทั้งบอสและระฆังพร้อมกัน จนระฆังหมดแรง — บอสมักจะตายก่อน</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="snow">❄ ❅ ❄</div>
+
+  <!-- 6 TREE -->
+  <section id="tree">
+    <div class="sec-head"><span class="sec-num">06</span><h2>ผังพาสซีฟ (Passive Tree)</h2></div>
+    <p class="sec-desc">เน้นอะไรก่อน + คีย์สโตนสำคัญ</p>
+
+    <div class="card">
+      <h3><span class="dot"></span>หลักการลงแต้ม</h3>
+      <ul>
+        <li><strong>ช่วงต้น:</strong> เก็บ <span class="hl">ดาเมจน้ำแข็ง/ธาตุ</span> + <span class="hl">Life</span> + <span class="hl">ความเร็วโจมตี</span> + ทนสตัน</li>
+        <li>เก็บ <span class="pill key">Way of the Mountain</span> — เพิ่มดาเมจ ลดดาเมจรับ และ +50% Stun Threshold เข้ากับ Freeze/Stun สุด ๆ</li>
+        <li><strong>Lv 22:</strong> ผังพร้อม → จิ้ม <span class="pill key">Hollow Palm Technique</span></li>
+        <li><strong>หลัง HPT:</strong> เริ่มเก็บโหนด <span class="hl">คริติคอล (Crit)</span> + <span class="hl">Energy Shield / Evasion</span> เพื่อสเกล HPT</li>
+      </ul>
+      <div class="tip key"><b>◆ จุดที่ต้องดูหน้า NoSugar:</b> ผังพาสซีฟแบบจิ้มทีละจุด (เส้นทางเดิน + จุดที่รีฟันด์) ดูในหน้าเขาช่อง "Passive Tree" จะเป๊ะที่สุด — กด import เข้า Build Planner ในเกมได้เลยถ้าเขาแปะโค้ดไว้</div>
+    </div>
+
+    <div class="card">
+      <h3><span class="dot"></span>โบนัสจากเควสเนื้อเรื่อง (น่าเก็บ)</h3>
+      <ul>
+        <li><strong>Act 2 · Valley of the Titans</strong> → +30% Charm Charges</li>
+        <li><strong>Act 3 · Venom Crypts</strong> → +30% Elemental Ailment Threshold</li>
+        <li><strong>Act 4 · Halls of the Dead</strong> → +5% ต้านทานไฟ/น้ำแข็ง/สายฟ้า</li>
+        <li><strong>Act 4 · Goddess of Justice</strong> → +30% ฟื้น Life จากขวดยา</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="snow">❄ ❅ ❄</div>
+
+  <!-- 7 GEAR -->
+  <section id="gear">
+    <div class="sec-head"><span class="sec-num">07</span><h2>ของที่ใส่ (Gear)</h2></div>
+    <p class="sec-desc">แยกชัด ก่อน-หลัง เปลี่ยนเป็น Hollow Palm</p>
+
+    <div class="grid2">
+      <div class="card" style="margin:8px 0">
+        <h3><span class="dot"></span>ก่อน HPT (จนถึง Lv 22)</h3>
+        <ul>
+          <li><strong>อาวุธ Quarterstaff สำคัญมาก!</strong> หา flat/% damage (+skills ยิ่งดี แต่กินมานา)</li>
+          <li>ถุงมือ/แหวน: flat damage</li>
+          <li>รองเท้า: Movement Speed</li>
+          <li>เกราะ Act 1: เน้น <span class="hl">Armour</span></li>
+          <li>เกราะ Act 2+: เริ่มเปลี่ยนเป็น <span class="hl">ES/EV</span> เตรียมตัว</li>
+          <li>ทุกชิ้น: ต้านทาน (Res) + Life</li>
+        </ul>
+      </div>
+      <div class="card" style="margin:8px 0">
+        <h3><span class="dot"></span>หลัง HPT (Lv 22+)</h3>
+        <ul>
+          <li><strong>ถอดอาวุธ!</strong> ดาเมจไม่พึ่งอาวุธแล้ว</li>
+          <li><strong class="hl">เน้น ES/EV ให้มากที่สุด</strong> — เกราะตัว (Body Armour) สำคัญสุด</li>
+          <li>ช่วงแรก: <b>ES มากกว่า EV</b></li>
+          <li>กลาง-ปลาย: <b>ไฮบริด EV/ES</b></li>
+          <li>สร้อย: <span class="hl">+Skills</span></li>
+          <li>ถุงมือ/แหวน: flat damage, ต้านทาน, Life</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip"><b>ทริคหาของในร้าน:</b> ใช้ Regex ในช่องค้นหาร้านวานเดอร์ เพื่อกรองเฉพาะของที่มีค่าที่ต้องการ (ช่วยประหยัดเวลาเดินดูทีละชิ้น)</div>
+    <div class="tip warn"><b>ห้ามลืม:</b> เก็บ <b>Gold</b> ไว้ช้อปครั้งใหญ่ตอน <b>Lv 16 และ 20</b> ที่ Ardura Caravan — ไอเทมเทียร์ใหม่ปลดล็อก อัปทีเดียวคุ้มสุด</div>
+  </section>
+
+  <div class="snow">❄ ❅ ❄</div>
+
+  <!-- 8 CHECKLIST -->
+  <section id="checklist">
+    <div class="sec-head"><span class="sec-num">08</span><h2>เช็คลิสต์ระหว่างเล่น</h2></div>
+    <p class="sec-desc">ติ๊กไปเรื่อย ๆ จะได้ไม่พลาด (ติ๊กได้เลย — อยู่จนกว่าจะรีเฟรชหน้า)</p>
+
+    <div class="card check">
+      <h3><span class="dot"></span>Milestones</h3>
+      <label><input type="checkbox"><span>รับ Glacial Cascade จาก Renly (Clearfell)</span></label>
+      <label><input type="checkbox"><span>รับ Frozen Locus + ตัด Frost Bomb</span></label>
+      <label><input type="checkbox"><span>~Lv 14: สลับมาใช้ Ice Strike + ตัด Tempest Bell</span></label>
+      <label><input type="checkbox"><span>หา Quarterstaff ดี ๆ ก่อนเปลี่ยน HPT</span></label>
+      <label><input type="checkbox"><span>⭐ Lv 16: ช้อปไอเทมเทียร์ใหม่ที่ Ardura Caravan</span></label>
+      <label><input type="checkbox"><span>⭐ Lv 20: ช้อปไอเทมรอบสอง</span></label>
+      <label><input type="checkbox"><span>เริ่มหาเกราะ ES/EV (Act 2+)</span></label>
+      <label><input type="checkbox"><span>⭐ Lv 22: จิ้ม Hollow Palm Technique + เปิด Herald of Ice</span></label>
+      <label><input type="checkbox"><span>ถอดอาวุธ + สวมเกราะ ES/EV สูง</span></label>
+      <label><input type="checkbox"><span>ตรวจต้านทานธาตุ (Res) ให้เต็มก่อนจบ campaign</span></label>
+    </div>
+
+    <div class="card check">
+      <h3><span class="dot"></span>นิสัยที่ควรทำตลอด</h3>
+      <label><input type="checkbox"><span>ตีบอส = วาง Frost Bomb ก่อนเสมอ</span></label>
+      <label><input type="checkbox"><span>ตีบอส = สะสมคอมโบ Ice Strike ก่อนวาง Tempest Bell</span></label>
+      <label><input type="checkbox"><span>เปิด Herald of Ice ไว้ตลอดเวลาเก็บแมพ</span></label>
+      <label><input type="checkbox"><span>เก็บ Gold ไว้รีฟันด์พาสซีฟ + ช้อปของ</span></label>
+      <label><input type="checkbox"><span>◆ เปิดหน้า NoSugar เทียบ passive + support gem ให้เป๊ะ</span></label>
+    </div>
+  </section>
+
+  <footer>
+    ❄ <b>Shave Ice HPT</b> · Ice Strike + Hollow Palm · Martial Artist · PoE2 0.5<br>
+    อิงบิลด์ของ NoSugar — ส่วนพาสซีฟ/เจมที่ทำเครื่องหมาย ◆ ให้เปิดหน้า NoSugar ดูประกอบ<br>
+    <span style="opacity:.6">หน้าต้นฉบับโดนกันบ็อตบล็อก · ตัวเลขในเกมถือเป็นหลักหากแพตช์ปรับ</span>
+  </footer>
+
+</div>
+</body>
+</html>
